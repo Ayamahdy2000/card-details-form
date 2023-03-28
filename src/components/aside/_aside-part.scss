@@ -1,4 +1,3 @@
-
 .card {
     background: -webkit-linear-gradient(316deg, rgb(58, 16, 74) 0%, rgb(66, 31, 84) 23%, rgb(52, 43, 87) 42%, rgb(70, 31, 56) 59%, rgb(33, 9, 47) 88%);
     background: -o-linear-gradient(316deg, rgb(58, 16, 74) 0%, rgb(66, 31, 84) 23%, rgb(52, 43, 87) 42%, rgb(70, 31, 56) 59%, rgb(33, 9, 47) 88%);
@@ -69,6 +68,10 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                display: grid;
+                justify-content: space-between;
+                align-items: center;
+                grid-template-columns: 70% 23%;
 
                 p {
                     text-transform: uppercase;
@@ -76,6 +79,9 @@
                     @include fluid-type-customized(1366px, 1920px, 16px, 18px);
                     @include fluid-type-customized(320px, 1024px, 14px, 16px);
                     letter-spacing: 1px;
+                    &:last-child{
+                        text-align: end;
+                    }
 
                 }
             }
@@ -167,7 +173,7 @@
                 top: 140px;
                 left: 50%;
                 right: 0;
-                transform: translate(-50% ,0);
+                transform: translate(-50%, 0);
                 padding: 20px 15px;
                 z-index: 1;
 
@@ -204,6 +210,7 @@
                 position: absolute;
                 top: 162px;
                 left: 5%;
+                transform: unset;
                 padding: 20px 15px;
                 z-index: 1;
 
@@ -215,21 +222,29 @@
                 main .card__front__text {
                     margin-bottom: 16px;
                 }
-            }
 
-            .card__back {
-                width: 85%;
-                position: absolute;
-                margin-top: 56px;
-                // top: 30%;
-                left: 13%;
-                margin-left: 0;
-
-                .card__back__body {
-                    padding: 15px 20px 20px;
-                }
-
+                .card__front__footer {
+                    display: grid;
+                    justify-content: space-between;
+                    align-items: center;
+                    grid-template-columns: 70% 23%;
+                
             }
         }
+
+        .card__back {
+            width: 85%;
+            position: absolute;
+            margin-top: 56px;
+            // top: 30%;
+            left: 13%;
+            margin-left: 0;
+
+            .card__back__body {
+                padding: 15px 20px 20px;
+            }
+
+        }
     }
+}
 }

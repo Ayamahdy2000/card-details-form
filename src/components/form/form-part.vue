@@ -5,6 +5,7 @@
         <label for="cardholderName" class="form-label form-sec__label"
           >cardholder name</label
         >
+      
         <input
           type="text"
           class="form-control form-sec__control"
@@ -16,11 +17,13 @@
               ? 'form-sec__control--success'
               : ''
           "
+             @keypress="preventTyping($event, state.form.cardholderName, 30, v.form.cardholderName.maxLength.$invalid)"
           id="cardholderName"
           placeholder="e.g. Aya Mahdy"
           v-model="state.form.cardholderName"
           @blur="v.form.cardholderName.$touch"
           @input="v.form.cardholderName.$touch"
+
         />
         <div class="form-sec__error" v-if="v.form.cardholderName.$error">
           {{ v.form.cardholderName.$errors[0].$message }}
@@ -44,7 +47,7 @@
               ? 'form-sec__control--success'
               : ''
           "
-          @keypress="preventTyping($event, state.form.cardholderNum, 16)"
+          @keypress="preventTyping($event, state.form.cardholderNum, 16 , v.form.cardholderNum.maxLength.$invalid)"
           name="cardNumber"
           v-model="state.cardholderNum.num"
           @blur="v.form.cardholderNum.$touch"
@@ -167,7 +170,7 @@
             v-model="state.form.cvc"
             @blur="v.form.cvc.$touch"
             @input="v.form.cvc.$touch"
-            @keypress="preventTyping($event, state.form.cvc, 3)"
+            @keypress="preventTyping($event, state.form.cvc, 3 , v.form.cvc.maxLength.$invalid)"
             name="cvc"
           />
           <div class="form-sec__error" v-if="v.form.cvc.$error">
@@ -225,6 +228,10 @@ export default {
         form: {
           cardholderName: {
             required: helpers.withMessage("Can't be blank", required),
+               maxLength: helpers.withMessage(
+              "Wrong format, must be 30 character",
+              maxLength(30)
+            ),
           },
           cardholderNum: {
             required: helpers.withMessage("Can't be blank", required),
@@ -254,6 +261,10 @@ export default {
               "Wrong format, must be 3 number",
               minLength(3)
               
+            ),
+              maxLength: helpers.withMessage(
+              "Wrong format, must be 3 number",
+              maxLength(3)
             ),
    
           },
@@ -311,9 +322,9 @@ export default {
         state.cardholderNum.num.replaceAll(" ", "")
       );
     };
-    const preventTyping = (e, val, length) => {
-     
-      if (val && val.toString().length == length) {
+    const preventTyping = (e, val, length , valid) => {
+  
+      if ((val && val.toString().length == length) || valid) {
        
         e.preventDefault();
       }
