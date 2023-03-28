@@ -114,6 +114,7 @@
                 v-model="state.form.month"
                 @blur="v.form.month.$touch"
                 @input="v.form.month.$touch"
+                 @keypress="preventTyping($event, state.form.month, 2 , v.form.month.maxLength.$invalid)"
               />
             </div>
             <div class="col-6">
@@ -123,6 +124,7 @@
                 id="cardholderYear"
                 placeholder="YY"
                 v-model="state.form.year"
+                  @keypress="preventTyping($event, state.form.year, 2 , v.form.year.maxLength.$invalid)"
                 :class="
                   v.form.year.$error
                     ? 'form-sec__control--fail'
@@ -138,15 +140,21 @@
             {{ state.dateError }}
           </div>
           </div>
-          <div class="form-sec__error" v-if="v.form.month.$error">
+          <div class="form-sec__error" v-if="v.form.month.$error && !v.form.month.required.$invalid">
             {{ v.form.month.$errors[0].$message }}
           </div>
 
           <div
-            v-if="v.form.year.$error && !v.form.month.required.$invalid"
+            v-if="v.form.year.$error && !v.form.year.required.$invalid"
             class="form-sec__error"
           >
             {{ v.form.year.$errors[0].$message }}
+          </div>
+           <div
+            v-if="( v.form.year.$error &&v.form.year.required.$invalid) || ( v.form.month.$error &&v.form.month.required.$invalid)"
+            class="form-sec__error"
+          >
+           can't be blank
           </div>
         </div>
       </div>
@@ -200,6 +208,8 @@ import {
   numeric,
   minLength,
   maxLength,
+  minValue,
+  maxValue
   
 } from "@vuelidate/validators";
 export default {
@@ -219,7 +229,7 @@ export default {
       form: {},
       cardholderNum: {},
       maxMonth: 0,
-      maxYear: 0,
+      maxYear: new Date(),
       maxDate: null,
       dateError: null,
     });
@@ -247,10 +257,26 @@ export default {
           },
           month: {
             required: helpers.withMessage("Can't be blank", required),
-         
+           
+              maxLength: helpers.withMessage(
+              "Wrong format, must be 2 number",
+              maxLength(2)
+            ),
+           minValue: helpers.withMessage("Wrong format", minValue(1 )),
+           maxValue: helpers.withMessage("Wrong format", maxValue(12 )),
           },
           year: {
             required: helpers.withMessage("Can't be blank", required),
+            minValue: helpers.withMessage("Year must be greater than current year", minValue(state.maxYear )),
+             minLength: helpers.withMessage(
+              "Wrong format, must be 2 number",
+              minLength(2)
+              
+            ),
+              maxLength: helpers.withMessage(
+              "Wrong format, must be 2 number",
+              maxLength(2)
+            ),
         
           },
           date: { required },
@@ -354,5 +380,8 @@ export default {
       }
     },
   },
+  mounted(){
+    this.state.maxYear = Number(dayjs(new Date()).format('YY')) + 1
+  }
 };
 </script>
