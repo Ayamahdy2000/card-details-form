@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Tajawal-Regular';
+    src: url(~assets/fonts/Tajawal-Regular/Tajawal-Regular.eot);
+    src: url(~assets/fonts/Tajawal-Regular/Tajawal-Regular.eot?#iefix) format('embedded-opentype'),
+        url(~assets/fonts/Tajawal-Regular/Tajawal-Regular.woff2) format('woff2'),
+        url(~assets/fonts/Tajawal-Regular/Tajawal-Regular.woff) format('woff'),
+        url(~assets/fonts/Tajawal-Regular/Tajawal-Regular.ttf) format('truetype'),
+        url(~assets/fonts/Tajawal-Regular/Tajawal-Regular.svg#Tajawal-Regular) format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tajawal-Light';
+    src: url('~assets/fonts/Tajawal-Light/Tajawal-Light.eot');
+    src: url('~assets/fonts/Tajawal-Light/Tajawal-Light.eot?#iefix') format('embedded-opentype'),
+        url('~assets/fonts/Tajawal-Light/Tajawal-Light.woff2') format('woff2'),
+        url('~assets/fonts/Tajawal-Light/Tajawal-Light.woff') format('woff'),
+        url('~assets/fonts/Tajawal-Light/Tajawal-Light.ttf') format('truetype'),
+        url('~assets/fonts/Tajawal-Light/Tajawal-Light.svg#Tajawal-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tajawal-Medium';
+    src: url('~assets/fonts/Tajawal-Medium/Tajawal-Medium.eot');
+    src: url('~assets/fonts/Tajawal-Medium/Tajawal-Medium.eot?#iefix') format('embedded-opentype'),
+        url('~assets/fonts/Tajawal-Medium/Tajawal-Medium.woff2') format('woff2'),
+        url('~assets/fonts/Tajawal-Medium/Tajawal-Medium.woff') format('woff'),
+        url('~assets/fonts/Tajawal-Medium/Tajawal-Medium.ttf') format('truetype'),
+        url('~assets/fonts/Tajawal-Medium/Tajawal-Medium.svg#Tajawal-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tajawal-Bold';
+    src: url('~assets/fonts/Tajawal-Bold/Tajawal-Bold.eot');
+    src: url('~assets/fonts/Tajawal-Bold/Tajawal-Bold.eot?#iefix') format('embedded-opentype'),
+        url('~assets/fonts/Tajawal-Bold/Tajawal-Bold.woff2') format('woff2'),
+        url('~assets/fonts/Tajawal-Bold/Tajawal-Bold.woff') format('woff'),
+        url('~assets/fonts/Tajawal-Bold/Tajawal-Bold.ttf') format('truetype'),
+        url('~assets/fonts/Tajawal-Bold/Tajawal-Bold.svg#Tajawal-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+

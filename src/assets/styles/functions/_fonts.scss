@@ -1,0 +1,4 @@
+@function strip-unit($value) {
+    @return calc($value / ($value * 0 + 1px));
+  }
+  
