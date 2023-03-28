@@ -44,6 +44,8 @@
               ? 'form-sec__control--success'
               : ''
           "
+          @keypress="preventTyping($event, state.form.cardholderNum, 16)"
+          name="cardNumber"
           v-model="state.cardholderNum.num"
           @blur="v.form.cardholderNum.$touch"
           id="cardholderNum"
@@ -129,6 +131,9 @@
                 @input="v.form.year.$touch"
               />
             </div>
+             <div class="form-sec__error" v-if="state.dateError">
+            {{ state.dateError }}
+          </div>
           </div>
           <div class="form-sec__error" v-if="v.form.month.$error">
             {{ v.form.month.$errors[0].$message }}
@@ -162,6 +167,8 @@
             v-model="state.form.cvc"
             @blur="v.form.cvc.$touch"
             @input="v.form.cvc.$touch"
+            @keypress="preventTyping($event, state.form.cvc, 3)"
+            name="cvc"
           />
           <div class="form-sec__error" v-if="v.form.cvc.$error">
             {{ v.form.cvc.$errors[0].$message }}
@@ -190,7 +197,7 @@ import {
   numeric,
   minLength,
   maxLength,
-  minValue,
+  
 } from "@vuelidate/validators";
 export default {
   components: {
@@ -211,6 +218,7 @@ export default {
       maxMonth: 0,
       maxYear: 0,
       maxDate: null,
+      dateError: null,
     });
     const rules = computed(() => {
       return {
@@ -232,25 +240,22 @@ export default {
           },
           month: {
             required: helpers.withMessage("Can't be blank", required),
-            maxValue: helpers.withMessage(
-              `Month must be greater than or equal  ${state.maxMonth}`,
-              minValue(state.maxMonth)
-            ),
+         
           },
           year: {
             required: helpers.withMessage("Can't be blank", required),
-            maxValue: helpers.withMessage(
-              `Year must be greater than or equal ${state.maxYear} `,
-              minValue(state.maxYear)
-            ),
+        
           },
           date: { required },
           cvc: {
             required: helpers.withMessage("Can't be blank", required),
+            numeric: helpers.withMessage("Wrong format, number only", numeric),
             minLength: helpers.withMessage(
               "Wrong format, must be 3 number",
               minLength(3)
+              
             ),
+   
           },
         },
       };
@@ -275,6 +280,7 @@ export default {
         let month = Number(state.form.month) - 2;
 
         state.maxDate = new Date(year, month);
+
       } else {
         context.emit("getCardMonthVal", "00");
       }
@@ -286,21 +292,31 @@ export default {
       } else {
         context.emit("getCardYearVal", "00");
       }
+      if(val.year != null && val.year != "" && val.month != null && val.month != ""  && val.date != null && val.date != ""){
+        let date = dayjs(val.month + "-" + val.year).isBefore(val.date, 'month');
+        if(!date){
+           state.dateError = 'Must be after issue date'
+        }
+      }
       if (val.cvc != null && val.cvc != "") {
         context.emit("getCardCVCVal", val.cvc);
       } else {
         context.emit("getCardCVCVal", "000");
       }
-      if (val.date != null && val.date != "") {
-        state.maxMonth = Number(dayjs(val.date).format("MM")) + 1;
-        state.maxYear = Number(dayjs(val.date).format("YY")) + 1;
-      }
+    
     });
 
     const takeSpace = () => {
       state.cardholderNum.num = formatNumber(
         state.cardholderNum.num.replaceAll(" ", "")
       );
+    };
+    const preventTyping = (e, val, length) => {
+     
+      if (val && val.toString().length == length) {
+       
+        e.preventDefault();
+      }
     };
 
     const formatNumber = (number) =>
@@ -314,6 +330,7 @@ export default {
       state,
       takeSpace,
       rules,
+      preventTyping,
 
       v,
     };

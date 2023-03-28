@@ -97,7 +97,7 @@ input[type=number] {
 }
 
 @media (max-width:1024px) {
-
+  
     .form-sec {
         width: 65%;
 
@@ -121,6 +121,9 @@ input[type=number] {
                 outline: none !important;
                 color: #220930;
                 font-family: 'Tajawal-Medium';
+                &:disabled{
+                    background-color: transparent;
+                }
 
                 &.form-sec__control--success {
                     border-color: #928AB8;
@@ -141,8 +144,8 @@ input[type=number] {
 
             .form-sec__error {
                 color: #B7676A;
-                @include fluid-type-customized(1366px, 1920px, 16px, 18px);
-                @include fluid-type-customized(320px, 1024px, 14px, 16px);
+                @include fluid-type-customized(1366px, 1920px, 14px, 16px);
+                @include fluid-type-customized(320px, 1024px, 12px, 14px);
                 font-family: 'Tajawal-medium';
             }
         }
@@ -164,6 +167,11 @@ input[type=number] {
     }
 }
 @media (max-width:768px){
+    .form-part {
+        min-height: unset;
+        margin-top: 100px;
+        margin-bottom: 60px;
+    }
     .form-sec{
         width: 100%;
         padding-left: 12px;
